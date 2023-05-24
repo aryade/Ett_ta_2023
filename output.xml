@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230524 09:40:39.793" rpa="false" schemaversion="3">
+<suite id="s1" name="Sctc" source="c:\Users\ett21016\Desktop\ett_ta_2023\SpeedController\sctc.robot">
+<test id="s1-t1" name=" Testing an While Loop" line="23">
+<kw name="creating an object While Loop">
+<arg>120</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${limit}</var>
+<arg>0</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230524 09:40:39.836" level="INFO">${limit} = 0</msg>
+<status status="PASS" starttime="20230524 09:40:39.836" endtime="20230524 09:40:39.838"/>
+</kw>
+<while condition="${limit} &lt;= ${SPEED_LIMIT}">
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.839" endtime="20230524 09:40:39.839"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.840" level="INFO">${limit} = 10</msg>
+<status status="PASS" starttime="20230524 09:40:39.840" endtime="20230524 09:40:39.840"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.838" endtime="20230524 09:40:39.840"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.842" endtime="20230524 09:40:39.842"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.843" level="INFO">${limit} = 20</msg>
+<status status="PASS" starttime="20230524 09:40:39.842" endtime="20230524 09:40:39.843"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.840" endtime="20230524 09:40:39.843"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.843" endtime="20230524 09:40:39.844"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.844" level="INFO">${limit} = 30</msg>
+<status status="PASS" starttime="20230524 09:40:39.844" endtime="20230524 09:40:39.844"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.843" endtime="20230524 09:40:39.844"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.845" endtime="20230524 09:40:39.845"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.846" level="INFO">${limit} = 40</msg>
+<status status="PASS" starttime="20230524 09:40:39.845" endtime="20230524 09:40:39.846"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.844" endtime="20230524 09:40:39.846"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.846" endtime="20230524 09:40:39.847"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.848" level="INFO">${limit} = 50</msg>
+<status status="PASS" starttime="20230524 09:40:39.847" endtime="20230524 09:40:39.848"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.846" endtime="20230524 09:40:39.848"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.849" endtime="20230524 09:40:39.850"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.851" level="INFO">${limit} = 60</msg>
+<status status="PASS" starttime="20230524 09:40:39.850" endtime="20230524 09:40:39.851"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.848" endtime="20230524 09:40:39.851"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.852" endtime="20230524 09:40:39.853"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.853" level="INFO">${limit} = 70</msg>
+<status status="PASS" starttime="20230524 09:40:39.853" endtime="20230524 09:40:39.855"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.851" endtime="20230524 09:40:39.855"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.855" endtime="20230524 09:40:39.856"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.857" level="INFO">${limit} = 80</msg>
+<status status="PASS" starttime="20230524 09:40:39.856" endtime="20230524 09:40:39.857"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.855" endtime="20230524 09:40:39.857"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.857" endtime="20230524 09:40:39.858"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.858" level="INFO">${limit} = 90</msg>
+<status status="PASS" starttime="20230524 09:40:39.858" endtime="20230524 09:40:39.859"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.857" endtime="20230524 09:40:39.859"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.860" endtime="20230524 09:40:39.860"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.861" level="INFO">${limit} = 100</msg>
+<status status="PASS" starttime="20230524 09:40:39.861" endtime="20230524 09:40:39.861"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.859" endtime="20230524 09:40:39.861"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.861" endtime="20230524 09:40:39.862"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.862" level="INFO">${limit} = 110</msg>
+<status status="PASS" starttime="20230524 09:40:39.862" endtime="20230524 09:40:39.862"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.861" endtime="20230524 09:40:39.862"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.863" endtime="20230524 09:40:39.863"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.864" level="INFO">${limit} = 120</msg>
+<status status="PASS" starttime="20230524 09:40:39.864" endtime="20230524 09:40:39.864"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.863" endtime="20230524 09:40:39.865"/>
+</iter>
+<iter>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${limit}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230524 09:40:39.865" endtime="20230524 09:40:39.866"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${limit}</var>
+<arg>${limit}+10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230524 09:40:39.866" level="INFO">${limit} = 130</msg>
+<status status="PASS" starttime="20230524 09:40:39.866" endtime="20230524 09:40:39.866"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.865" endtime="20230524 09:40:39.866"/>
+</iter>
+<status status="PASS" starttime="20230524 09:40:39.838" endtime="20230524 09:40:39.866"/>
+</while>
+<status status="PASS" starttime="20230524 09:40:39.835" endtime="20230524 09:40:39.867"/>
+</kw>
+<status status="PASS" starttime="20230524 09:40:39.834" endtime="20230524 09:40:39.867"/>
+</test>
+<status status="PASS" starttime="20230524 09:40:39.799" endtime="20230524 09:40:39.868"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Sctc">Sctc</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230523 14:29:24.776" rpa="false" schemaversion="3">
+<suite id="s1" name="Remote-Power-Supply" source="C:\Users\ett21016\Desktop\ett_ta_2023\rps\remote-power-supply.robot">
+<test id="s1-t1" name="Turn on Power supply 2 remotely" line="15">
+<kw name="RPS send commands">
+<var>${out}</var>
+<arg>SetPower</arg>
+<arg>2</arg>
+<arg>1</arg>
+<kw name="Send Cmds" library="commands">
+<var>${output}</var>
+<arg>${command}</arg>
+<arg>${port}</arg>
+<arg>${state}</arg>
+<msg timestamp="20230523 14:29:26.991" level="INFO">http://admin:12345678@localhost:5000/SetCmd?CMD=SetPower</msg>
+<msg timestamp="20230523 14:29:26.992" level="INFO">${output} = True</msg>
+<status status="PASS" starttime="20230523 14:29:24.899" endtime="20230523 14:29:26.992"/>
+</kw>
+<msg timestamp="20230523 14:29:26.992" level="INFO">${out} = True</msg>
+<status status="PASS" starttime="20230523 14:29:24.899" endtime="20230523 14:29:26.992"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${True}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230523 14:29:26.993" endtime="20230523 14:29:26.993"/>
+</kw>
+<status status="PASS" starttime="20230523 14:29:24.899" endtime="20230523 14:29:26.993"/>
+</test>
+<test id="s1-t2" name="Verify power supply 2 is on" line="19">
+<kw name="RPS get Power">
+<var>${out}</var>
+<arg>GetPower</arg>
+<kw name="Send Cmds" library="commands">
+<var>${output}</var>
+<arg>${command}</arg>
+<msg timestamp="20230523 14:29:29.018" level="INFO">http://admin:12345678@localhost:5000/SetCmd?CMD=GetPower</msg>
+<msg timestamp="20230523 14:29:29.018" level="INFO">${output} = xy=0 yz=1 ab=0 cd=0</msg>
+<status status="PASS" starttime="20230523 14:29:26.996" endtime="20230523 14:29:29.018"/>
+</kw>
+<msg timestamp="20230523 14:29:29.018" level="INFO">${out} = xy=0 yz=1 ab=0 cd=0</msg>
+<status status="PASS" starttime="20230523 14:29:26.996" endtime="20230523 14:29:29.018"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${out}</arg>
+<arg>yz=1</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20230523 14:29:29.019" endtime="20230523 14:29:29.019"/>
+</kw>
+<status status="PASS" starttime="20230523 14:29:26.995" endtime="20230523 14:29:29.020"/>
+</test>
+<test id="s1-t3" name="Turn off Power supply 2 remotely" line="23">
+<kw name="RPS send commands">
+<var>${out}</var>
+<arg>SetPower</arg>
+<arg>2</arg>
+<arg>0</arg>
+<kw name="Send Cmds" library="commands">
+<var>${output}</var>
+<arg>${command}</arg>
+<arg>${port}</arg>
+<arg>${state}</arg>
+<msg timestamp="20230523 14:29:31.086" level="INFO">http://admin:12345678@localhost:5000/SetCmd?CMD=SetPower</msg>
+<msg timestamp="20230523 14:29:31.086" level="INFO">${output} = True</msg>
+<status status="PASS" starttime="20230523 14:29:29.023" endtime="20230523 14:29:31.086"/>
+</kw>
+<msg timestamp="20230523 14:29:31.086" level="INFO">${out} = True</msg>
+<status status="PASS" starttime="20230523 14:29:29.022" endtime="20230523 14:29:31.086"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${True}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230523 14:29:31.087" endtime="20230523 14:29:31.087"/>
+</kw>
+<status status="PASS" starttime="20230523 14:29:29.022" endtime="20230523 14:29:31.087"/>
+</test>
+<test id="s1-t4" name="Verify power supply 2 is off" line="27">
+<kw name="RPS get Power">
+<var>${out}</var>
+<arg>GetPower</arg>
+<kw name="Send Cmds" library="commands">
+<var>${output}</var>
+<arg>${command}</arg>
+<msg timestamp="20230523 14:29:33.129" level="INFO">http://admin:12345678@localhost:5000/SetCmd?CMD=GetPower</msg>
+<msg timestamp="20230523 14:29:33.129" level="INFO">${output} = xy=0 yz=0 ab=0 cd=0</msg>
+<status status="PASS" starttime="20230523 14:29:31.090" endtime="20230523 14:29:33.129"/>
+</kw>
+<msg timestamp="20230523 14:29:33.130" level="INFO">${out} = xy=0 yz=0 ab=0 cd=0</msg>
+<status status="PASS" starttime="20230523 14:29:31.089" endtime="20230523 14:29:33.130"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${out}</arg>
+<arg>yz=0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20230523 14:29:33.130" endtime="20230523 14:29:33.130"/>
+</kw>
+<status status="PASS" starttime="20230523 14:29:31.089" endtime="20230523 14:29:33.131"/>
+</test>
+<status status="PASS" starttime="20230523 14:29:24.777" endtime="20230523 14:29:33.132"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="4" fail="0" skip="0" id="s1" name="Remote-Power-Supply">Remote-Power-Supply</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

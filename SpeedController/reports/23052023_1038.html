@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230523 11:23:59.272" rpa="false" schemaversion="3">
+<suite id="s1" name="Sctc" source="C:\Users\ett21016\Desktop\ett_ta_2023\SpeedController\sctc.robot">
+<test id="s1-t1" name="Testing an object" line="11">
+<kw name="creating an object">
+<for flavor="IN">
+<var>${Current_speed_limit}</var>
+<value>@{SPEED_LIMIT}</value>
+<iter>
+<var name="${Current_speed_limit}">30</var>
+<kw name="Log" library="BuiltIn">
+<arg>${Current_speed_limit}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230523 11:23:59.295" level="INFO">30</msg>
+<status status="PASS" starttime="20230523 11:23:59.295" endtime="20230523 11:23:59.295"/>
+</kw>
+<kw name="Set Speed Limit" library="volkswagen">
+<arg>${Current_speed_limit}</arg>
+<msg timestamp="20230523 11:23:59.296" level="INFO">Setting speed limit to 30 [km/h]</msg>
+<status status="PASS" starttime="20230523 11:23:59.295" endtime="20230523 11:23:59.296"/>
+</kw>
+<kw name="Car Is Moving" library="volkswagen">
+<msg timestamp="20230523 11:23:59.296" level="INFO">The car is moving</msg>
+<status status="PASS" starttime="20230523 11:23:59.296" endtime="20230523 11:23:59.296"/>
+</kw>
+<kw name="Speed Is Within Limit" library="volkswagen">
+<msg timestamp="20230523 11:23:59.297" level="INFO">Checking if current speed 27 [km/h] is whithin the speed limit</msg>
+<status status="PASS" starttime="20230523 11:23:59.296" endtime="20230523 11:23:59.297"/>
+</kw>
+<status status="PASS" starttime="20230523 11:23:59.295" endtime="20230523 11:23:59.297"/>
+</iter>
+<iter>
+<var name="${Current_speed_limit}">60</var>
+<kw name="Log" library="BuiltIn">
+<arg>${Current_speed_limit}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230523 11:23:59.297" level="INFO">60</msg>
+<status status="PASS" starttime="20230523 11:23:59.297" endtime="20230523 11:23:59.297"/>
+</kw>
+<kw name="Set Speed Limit" library="volkswagen">
+<arg>${Current_speed_limit}</arg>
+<msg timestamp="20230523 11:23:59.297" level="INFO">Setting speed limit to 60 [km/h]</msg>
+<status status="PASS" starttime="20230523 11:23:59.297" endtime="20230523 11:23:59.297"/>
+</kw>
+<kw name="Car Is Moving" library="volkswagen">
+<msg timestamp="20230523 11:23:59.297" level="INFO">The car is moving</msg>
+<status status="PASS" starttime="20230523 11:23:59.297" endtime="20230523 11:23:59.297"/>
+</kw>
+<kw name="Speed Is Within Limit" library="volkswagen">
+<msg timestamp="20230523 11:23:59.297" level="INFO">Checking if current speed 57 [km/h] is whithin the speed limit</msg>
+<status status="PASS" starttime="20230523 11:23:59.297" endtime="20230523 11:23:59.297"/>
+</kw>
+<status status="PASS" starttime="20230523 11:23:59.297" endtime="20230523 11:23:59.297"/>
+</iter>
+<iter>
+<var name="${Current_speed_limit}">80</var>
+<kw name="Log" library="BuiltIn">
+<arg>${Current_speed_limit}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230523 11:23:59.297" level="INFO">80</msg>
+<status status="PASS" starttime="20230523 11:23:59.297" endtime="20230523 11:23:59.297"/>
+</kw>
+<kw name="Set Speed Limit" library="volkswagen">
+<arg>${Current_speed_limit}</arg>
+<msg timestamp="20230523 11:23:59.298" level="INFO">Setting speed limit to 80 [km/h]</msg>
+<status status="PASS" starttime="20230523 11:23:59.297" endtime="20230523 11:23:59.298"/>
+</kw>
+<kw name="Car Is Moving" library="volkswagen">
+<msg timestamp="20230523 11:23:59.298" level="INFO">The car is moving</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<kw name="Speed Is Within Limit" library="volkswagen">
+<msg timestamp="20230523 11:23:59.298" level="INFO">Checking if current speed 77 [km/h] is whithin the speed limit</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<status status="PASS" starttime="20230523 11:23:59.297" endtime="20230523 11:23:59.298"/>
+</iter>
+<iter>
+<var name="${Current_speed_limit}">100</var>
+<kw name="Log" library="BuiltIn">
+<arg>${Current_speed_limit}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230523 11:23:59.298" level="INFO">100</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<kw name="Set Speed Limit" library="volkswagen">
+<arg>${Current_speed_limit}</arg>
+<msg timestamp="20230523 11:23:59.298" level="INFO">Setting speed limit to 100 [km/h]</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<kw name="Car Is Moving" library="volkswagen">
+<msg timestamp="20230523 11:23:59.298" level="INFO">The car is moving</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<kw name="Speed Is Within Limit" library="volkswagen">
+<msg timestamp="20230523 11:23:59.298" level="INFO">Checking if current speed 97 [km/h] is whithin the speed limit</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</iter>
+<iter>
+<var name="${Current_speed_limit}">120</var>
+<kw name="Log" library="BuiltIn">
+<arg>${Current_speed_limit}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230523 11:23:59.298" level="INFO">120</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<kw name="Set Speed Limit" library="volkswagen">
+<arg>${Current_speed_limit}</arg>
+<msg timestamp="20230523 11:23:59.298" level="INFO">Setting speed limit to 120 [km/h]</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<kw name="Car Is Moving" library="volkswagen">
+<msg timestamp="20230523 11:23:59.298" level="INFO">The car is moving</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<kw name="Speed Is Within Limit" library="volkswagen">
+<msg timestamp="20230523 11:23:59.298" level="INFO">Checking if current speed 117 [km/h] is whithin the speed limit</msg>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</kw>
+<status status="PASS" starttime="20230523 11:23:59.298" endtime="20230523 11:23:59.298"/>
+</iter>
+<status status="PASS" starttime="20230523 11:23:59.295" endtime="20230523 11:23:59.298"/>
+</for>
+<status status="PASS" starttime="20230523 11:23:59.295" endtime="20230523 11:23:59.298"/>
+</kw>
+<status status="PASS" starttime="20230523 11:23:59.294" endtime="20230523 11:23:59.299"/>
+</test>
+<test id="s1-t2" name="Test passing with 2 variables arguments" line="14">
+<kw name="I am just printing to the log and console 2 passed arguments">
+<arg>${var1}</arg>
+<arg>${var2}</arg>
+<kw name="Log" library="BuiltIn">
+<arg>${var1}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230523 11:23:59.302" level="INFO">198</msg>
+<status status="PASS" starttime="20230523 11:23:59.302" endtime="20230523 11:23:59.302"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${var2}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230523 11:23:59.303" level="INFO">I am an STRING</msg>
+<status status="PASS" starttime="20230523 11:23:59.302" endtime="20230523 11:23:59.303"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${var1} ${var2}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230523 11:23:59.303" endtime="20230523 11:23:59.304"/>
+</kw>
+<status status="PASS" starttime="20230523 11:23:59.301" endtime="20230523 11:23:59.304"/>
+</kw>
+<status status="PASS" starttime="20230523 11:23:59.301" endtime="20230523 11:23:59.305"/>
+</test>
+<status status="PASS" starttime="20230523 11:23:59.273" endtime="20230523 11:23:59.307"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="Sctc">Sctc</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

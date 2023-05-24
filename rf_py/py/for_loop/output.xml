@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230515 15:13:27.283" rpa="false" schemaversion="3">
+<suite id="s1" name="In Zip" source="C:\Users\ett21016\Desktop\ett_ta_2023\rf_py\py\for_loop\_in_zip.robot">
+<test id="s1-t1" name="Combines two loops" line="6">
+<kw name="Log To Console" library="BuiltIn">
+<arg>Full Names:</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230515 15:13:27.304" endtime="20230515 15:13:27.304"/>
+</kw>
+<for flavor="IN ZIP">
+<var>${first}</var>
+<var>${last}</var>
+<value>${First Name}</value>
+<value>${Last Name}</value>
+<iter>
+<var name="${first}">Bruce</var>
+<var name="${last}">Banner</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${first} ${last}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230515 15:13:27.305" endtime="20230515 15:13:27.306"/>
+</kw>
+<status status="PASS" starttime="20230515 15:13:27.305" endtime="20230515 15:13:27.306"/>
+</iter>
+<iter>
+<var name="${first}">Steve</var>
+<var name="${last}">Rogers</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${first} ${last}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230515 15:13:27.306" endtime="20230515 15:13:27.306"/>
+</kw>
+<status status="PASS" starttime="20230515 15:13:27.306" endtime="20230515 15:13:27.306"/>
+</iter>
+<iter>
+<var name="${first}">Peter</var>
+<var name="${last}">Parker</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${first} ${last}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230515 15:13:27.307" endtime="20230515 15:13:27.307"/>
+</kw>
+<status status="PASS" starttime="20230515 15:13:27.306" endtime="20230515 15:13:27.307"/>
+</iter>
+<status status="PASS" starttime="20230515 15:13:27.305" endtime="20230515 15:13:27.307"/>
+</for>
+<status status="PASS" starttime="20230515 15:13:27.304" endtime="20230515 15:13:27.307"/>
+</test>
+<status status="PASS" starttime="20230515 15:13:27.285" endtime="20230515 15:13:27.309"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="In Zip">In Zip</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

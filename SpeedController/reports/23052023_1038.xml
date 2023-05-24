@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Sctc" tests="2" errors="0" failures="0" skipped="0" time="0.034" timestamp="2023-05-23T11:23:59.273000">
+<testcase classname="Sctc" name="Testing an object" time="0.005">
+</testcase>
+<testcase classname="Sctc" name="Test passing with 2 variables arguments" time="0.004">
+</testcase>
+</testsuite>
