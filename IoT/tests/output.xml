@@ -1,0 +1,2663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230525 09:22:52.745" rpa="false" schemaversion="3">
+<suite id="s1" name="Pubsub" source="C:\Users\ett21016\Desktop\ett_ta_2023\ett_ta\Ett_ta_2023\IoT\tests\pubsub.robot">
+<test id="s1-t1" name="Publish a non-empty message" line="6">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:22:52.813" level="INFO">${time} = 1684995772</msg>
+<status status="PASS" starttime="20230525 09:22:52.812" endtime="20230525 09:22:52.813"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${message}</var>
+<arg>test message</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:22:52.814" level="INFO">${message} = test message 1684995772</msg>
+<status status="PASS" starttime="20230525 09:22:52.813" endtime="20230525 09:22:52.814"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>message=${message}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:52.815" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:52.814" endtime="20230525 09:22:52.816"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:52.820" level="INFO">Publish topic: test/mqtt_test, message: test message 1684995772, qos: 0, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:52.820" endtime="20230525 09:22:52.820"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:52.820" endtime="20230525 09:22:52.820"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:52.814" endtime="20230525 09:22:52.820"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:22:52.803" endtime="20230525 09:22:52.820"/>
+</test>
+<test id="s1-t2" name="Publish an empty message" line="11">
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:52.825" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:52.825" endtime="20230525 09:22:52.837"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:52.840" level="INFO">Publish topic: test/mqtt_test, message: , qos: 0, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:52.838" endtime="20230525 09:22:52.840"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:52.841" endtime="20230525 09:22:52.845"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:52.820" endtime="20230525 09:22:52.845"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:22:52.820" endtime="20230525 09:22:52.845"/>
+</test>
+<test id="s1-t3" name="Publish a message with QOS 1 and validate that the message is received" line="14">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:22:52.848" level="INFO">${time} = 1684995772</msg>
+<status status="PASS" starttime="20230525 09:22:52.847" endtime="20230525 09:22:52.848"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:22:52.850" level="INFO">${client} = robot.mqtt.1684995772</msg>
+<status status="PASS" starttime="20230525 09:22:52.849" endtime="20230525 09:22:52.850"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:22:52.851" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:22:52.850" endtime="20230525 09:22:52.851"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${message}</var>
+<arg>subscription test message</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:22:52.855" level="INFO">${message} = subscription test message</msg>
+<status status="PASS" starttime="20230525 09:22:52.851" endtime="20230525 09:22:52.855"/>
+</kw>
+<kw name="Run Keyword And Expect Error" library="BuiltIn">
+<arg>The expected payload didn't arrive in the topic</arg>
+<arg>Subscribe to MQTT Broker and Validate</arg>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:52.861" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:52.860" endtime="20230525 09:22:52.863"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<msg timestamp="20230525 09:22:52.866" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:22:53.879" level="FAIL">The expected payload didn't arrive in the topic</msg>
+<status status="FAIL" starttime="20230525 09:22:52.864" endtime="20230525 09:22:53.891"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:53.891" endtime="20230525 09:22:53.893"/>
+</kw>
+<status status="FAIL" starttime="20230525 09:22:52.858" endtime="20230525 09:22:53.893"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:52.858" endtime="20230525 09:22:53.894"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:53.896" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:53.896" endtime="20230525 09:22:53.897"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:53.898" level="INFO">Publish topic: test/mqtt_test_sub, message: subscription test message, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:53.897" endtime="20230525 09:22:53.899"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:53.899" endtime="20230525 09:22:53.900"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:53.894" endtime="20230525 09:22:53.900"/>
+</kw>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:53.903" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:53.901" endtime="20230525 09:22:53.904"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<msg timestamp="20230525 09:22:53.905" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:22:53.904" endtime="20230525 09:22:53.906"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:53.906" endtime="20230525 09:22:53.907"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:53.900" endtime="20230525 09:22:53.907"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:22:52.846" endtime="20230525 09:22:53.907"/>
+</test>
+<test id="s1-t4" name="Publish multiple messages and confirm that validation succeeds only after correct message is published" line="24">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:22:53.910" level="INFO">${time} = 1684995773</msg>
+<status status="PASS" starttime="20230525 09:22:53.909" endtime="20230525 09:22:53.910"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:22:53.912" level="INFO">${client} = robot.mqtt.1684995773</msg>
+<status status="PASS" starttime="20230525 09:22:53.911" endtime="20230525 09:22:53.912"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:22:53.913" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:22:53.912" endtime="20230525 09:22:53.913"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${message}</var>
+<arg>subscription test message</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:22:53.913" level="INFO">${message} = subscription test message</msg>
+<status status="PASS" starttime="20230525 09:22:53.913" endtime="20230525 09:22:53.913"/>
+</kw>
+<kw name="Run Keyword And Expect Error" library="BuiltIn">
+<arg>The expected payload didn't arrive in the topic</arg>
+<arg>Subscribe to MQTT Broker and Validate</arg>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:53.915" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:53.914" endtime="20230525 09:22:53.916"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<msg timestamp="20230525 09:22:53.917" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:22:54.921" level="FAIL">The expected payload didn't arrive in the topic</msg>
+<status status="FAIL" starttime="20230525 09:22:53.916" endtime="20230525 09:22:54.922"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:54.922" endtime="20230525 09:22:54.922"/>
+</kw>
+<status status="FAIL" starttime="20230525 09:22:53.914" endtime="20230525 09:22:54.923"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:53.914" endtime="20230525 09:22:54.923"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=message1</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:54.924" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:54.923" endtime="20230525 09:22:54.925"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:54.926" level="INFO">Publish topic: test/mqtt_test_sub, message: message1, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:54.925" endtime="20230525 09:22:54.926"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:54.927" endtime="20230525 09:22:54.927"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:54.923" endtime="20230525 09:22:54.927"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=message2</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:54.929" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:54.928" endtime="20230525 09:22:54.952"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:54.952" level="INFO">Publish topic: test/mqtt_test_sub, message: message2, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:54.952" endtime="20230525 09:22:54.953"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:54.953" endtime="20230525 09:22:54.953"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:54.927" endtime="20230525 09:22:54.953"/>
+</kw>
+<kw name="Run Keyword And Expect Error" library="BuiltIn">
+<arg>The expected payload didn't arrive in the topic</arg>
+<arg>Subscribe to MQTT Broker and Validate</arg>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:54.955" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:54.954" endtime="20230525 09:22:54.955"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<msg timestamp="20230525 09:22:54.956" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:22:55.966" level="FAIL">The expected payload didn't arrive in the topic</msg>
+<status status="FAIL" starttime="20230525 09:22:54.955" endtime="20230525 09:22:55.967"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:55.967" endtime="20230525 09:22:55.968"/>
+</kw>
+<status status="FAIL" starttime="20230525 09:22:54.954" endtime="20230525 09:22:55.968"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:54.954" endtime="20230525 09:22:55.968"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:55.971" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:55.971" endtime="20230525 09:22:55.987"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:55.989" level="INFO">Publish topic: test/mqtt_test_sub, message: subscription test message, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:55.987" endtime="20230525 09:22:55.990"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:55.990" endtime="20230525 09:22:55.991"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:55.971" endtime="20230525 09:22:55.991"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=message3</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:55.993" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:55.992" endtime="20230525 09:22:56.017"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:56.017" level="INFO">Publish topic: test/mqtt_test_sub, message: message3, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:56.017" endtime="20230525 09:22:56.018"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:56.018" endtime="20230525 09:22:56.019"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:55.992" endtime="20230525 09:22:56.019"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=message4</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:56.020" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:56.020" endtime="20230525 09:22:56.033"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:56.034" level="INFO">Publish topic: test/mqtt_test_sub, message: message4, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:56.033" endtime="20230525 09:22:56.034"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:56.034" endtime="20230525 09:22:56.035"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:56.019" endtime="20230525 09:22:56.035"/>
+</kw>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:56.036" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:56.036" endtime="20230525 09:22:56.048"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<msg timestamp="20230525 09:22:56.049" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:22:56.048" endtime="20230525 09:22:56.049"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:56.049" endtime="20230525 09:22:56.050"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:56.035" endtime="20230525 09:22:56.050"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:22:53.909" endtime="20230525 09:22:56.050"/>
+</test>
+<test id="s1-t5" name="Publish an empty message with QOS 1 and validate" line="40">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:22:56.052" level="INFO">${time} = 1684995776</msg>
+<status status="PASS" starttime="20230525 09:22:56.051" endtime="20230525 09:22:56.052"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:22:56.052" level="INFO">${client} = robot.mqtt.1684995776</msg>
+<status status="PASS" starttime="20230525 09:22:56.052" endtime="20230525 09:22:56.052"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:22:56.053" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:22:56.053" endtime="20230525 09:22:56.053"/>
+</kw>
+<kw name="Run Keyword And Expect Error" library="BuiltIn">
+<arg>The expected payload didn't arrive in the topic</arg>
+<arg>Subscribe to MQTT Broker and Validate</arg>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:56.055" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:56.054" endtime="20230525 09:22:56.056"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<msg timestamp="20230525 09:22:56.057" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:22:57.067" level="FAIL">The expected payload didn't arrive in the topic</msg>
+<status status="FAIL" starttime="20230525 09:22:56.056" endtime="20230525 09:22:57.067"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:57.067" endtime="20230525 09:22:57.067"/>
+</kw>
+<status status="FAIL" starttime="20230525 09:22:56.053" endtime="20230525 09:22:57.067"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:56.053" endtime="20230525 09:22:57.067"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:57.074" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:57.072" endtime="20230525 09:22:57.092"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:57.094" level="INFO">Publish topic: test/mqtt_test_sub, message: , qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:57.092" endtime="20230525 09:22:57.094"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:57.094" endtime="20230525 09:22:57.095"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:57.067" endtime="20230525 09:22:57.095"/>
+</kw>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:57.098" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:57.097" endtime="20230525 09:22:57.123"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<msg timestamp="20230525 09:22:57.124" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:22:57.123" endtime="20230525 09:22:57.124"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:57.124" endtime="20230525 09:22:57.125"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:57.096" endtime="20230525 09:22:57.125"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:22:56.051" endtime="20230525 09:22:57.126"/>
+</test>
+<test id="s1-t6" name="Publish and validate with regular expression" line="49">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:22:57.129" level="INFO">${time} = 1684995777</msg>
+<status status="PASS" starttime="20230525 09:22:57.128" endtime="20230525 09:22:57.129"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:22:57.130" level="INFO">${client} = robot.mqtt.1684995777</msg>
+<status status="PASS" starttime="20230525 09:22:57.130" endtime="20230525 09:22:57.130"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:22:57.131" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:22:57.130" endtime="20230525 09:22:57.131"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${message}</var>
+<arg>subscription test message</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:22:57.131" level="INFO">${message} = subscription test message</msg>
+<status status="PASS" starttime="20230525 09:22:57.131" endtime="20230525 09:22:57.131"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${regex}</var>
+<arg>^subscription [test]{4} message$</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:22:57.132" level="INFO">${regex} = ^subscription [test]{4} message$</msg>
+<status status="PASS" starttime="20230525 09:22:57.131" endtime="20230525 09:22:57.132"/>
+</kw>
+<kw name="Run Keyword And Expect Error" library="BuiltIn">
+<arg>The expected payload didn't arrive in the topic</arg>
+<arg>Subscribe to MQTT Broker and Validate</arg>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=whatever</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=whatever</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:57.133" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:57.133" endtime="20230525 09:22:57.134"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<msg timestamp="20230525 09:22:57.135" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:22:58.150" level="FAIL">The expected payload didn't arrive in the topic</msg>
+<status status="FAIL" starttime="20230525 09:22:57.134" endtime="20230525 09:22:58.151"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:58.151" endtime="20230525 09:22:58.152"/>
+</kw>
+<status status="FAIL" starttime="20230525 09:22:57.133" endtime="20230525 09:22:58.152"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:57.133" endtime="20230525 09:22:58.152"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:58.155" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:58.154" endtime="20230525 09:22:58.166"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:22:58.167" level="INFO">Publish topic: test/mqtt_test_sub, message: subscription test message, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:22:58.166" endtime="20230525 09:22:58.167"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:58.167" endtime="20230525 09:22:58.167"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:58.153" endtime="20230525 09:22:58.167"/>
+</kw>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${regex}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:58.169" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:58.169" endtime="20230525 09:22:58.183"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<msg timestamp="20230525 09:22:58.183" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:22:58.183" endtime="20230525 09:22:58.183"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:22:58.183" endtime="20230525 09:22:58.184"/>
+</kw>
+<status status="PASS" starttime="20230525 09:22:58.167" endtime="20230525 09:22:58.184"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:22:57.127" endtime="20230525 09:22:58.184"/>
+</test>
+<test id="s1-t7" name="Subscribe for the first time and validate that no messages are received" line="60">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:22:58.187" level="INFO">${time} = 1684995778</msg>
+<status status="PASS" starttime="20230525 09:22:58.186" endtime="20230525 09:22:58.187"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:22:58.187" level="INFO">${client} = robot.mqtt.1684995778</msg>
+<status status="PASS" starttime="20230525 09:22:58.187" endtime="20230525 09:22:58.187"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:22:58.188" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:22:58.188" endtime="20230525 09:22:58.189"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<var>@{messages}</var>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>timeout=5s</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:22:58.189" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:22:58.189" endtime="20230525 09:22:58.191"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:22:58.192" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:03.204" level="INFO">@{messages} = [ ]</msg>
+<status status="PASS" starttime="20230525 09:22:58.191" endtime="20230525 09:23:03.204"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:03.204" endtime="20230525 09:23:03.204"/>
+</kw>
+<msg timestamp="20230525 09:23:03.204" level="INFO">@{messages} = [ ]</msg>
+<status status="PASS" starttime="20230525 09:22:58.189" endtime="20230525 09:23:03.204"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:03.204" level="INFO">[]</msg>
+<status status="PASS" starttime="20230525 09:23:03.204" endtime="20230525 09:23:03.204"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages}</arg>
+<arg>0</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:03.211" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20230525 09:23:03.210" endtime="20230525 09:23:03.211"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:22:58.186" endtime="20230525 09:23:03.212"/>
+</test>
+<test id="s1-t8" name="Subscribe, publish 1 message and validate it is received" line="68">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:03.216" level="INFO">${time} = 1684995783</msg>
+<status status="PASS" starttime="20230525 09:23:03.216" endtime="20230525 09:23:03.216"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:03.218" level="INFO">${client} = robot.mqtt.1684995783</msg>
+<status status="PASS" starttime="20230525 09:23:03.217" endtime="20230525 09:23:03.218"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:03.218" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:03.218" endtime="20230525 09:23:03.218"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:03.220" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:03.219" endtime="20230525 09:23:03.236"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:03.237" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:04.237" level="INFO">@{messages} = [ ]</msg>
+<status status="PASS" starttime="20230525 09:23:03.236" endtime="20230525 09:23:04.237"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:04.237" endtime="20230525 09:23:04.237"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:03.219" endtime="20230525 09:23:04.237"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:04.242" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:04.237" endtime="20230525 09:23:04.260"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:04.261" level="INFO">Publish topic: test/mqtt_test_sub, message: test message, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:04.260" endtime="20230525 09:23:04.261"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:04.261" endtime="20230525 09:23:04.262"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:04.237" endtime="20230525 09:23:04.262"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<var>@{messages}</var>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:04.264" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:04.264" endtime="20230525 09:23:04.276"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:04.276" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:05.277" level="INFO">@{messages} = [ test message ]</msg>
+<status status="PASS" starttime="20230525 09:23:04.276" endtime="20230525 09:23:05.277"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:05.277" endtime="20230525 09:23:05.277"/>
+</kw>
+<msg timestamp="20230525 09:23:05.277" level="INFO">@{messages} = [ test message ]</msg>
+<status status="PASS" starttime="20230525 09:23:04.263" endtime="20230525 09:23:05.277"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:05.282" level="INFO">['test message']</msg>
+<status status="PASS" starttime="20230525 09:23:05.282" endtime="20230525 09:23:05.282"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages}</arg>
+<arg>1</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:05.285" level="INFO">Length is 1</msg>
+<status status="PASS" starttime="20230525 09:23:05.284" endtime="20230525 09:23:05.285"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[0]</arg>
+<arg>test message</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:05.286" endtime="20230525 09:23:05.287"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:23:03.215" endtime="20230525 09:23:05.289"/>
+</test>
+<test id="s1-t9" name="Subscribe with no limit, publish multiple messages and validate they are received" line="79">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:05.295" level="INFO">${time} = 1684995785</msg>
+<status status="PASS" starttime="20230525 09:23:05.294" endtime="20230525 09:23:05.295"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:05.296" level="INFO">${client} = robot.mqtt.1684995785</msg>
+<status status="PASS" starttime="20230525 09:23:05.296" endtime="20230525 09:23:05.296"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:05.297" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:05.297" endtime="20230525 09:23:05.297"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:05.298" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:05.298" endtime="20230525 09:23:05.324"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:05.326" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:06.330" level="INFO">@{messages} = [ ]</msg>
+<status status="PASS" starttime="20230525 09:23:05.324" endtime="20230525 09:23:06.330"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:06.330" endtime="20230525 09:23:06.330"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:05.298" endtime="20230525 09:23:06.330"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message1</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:06.336" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:06.330" endtime="20230525 09:23:06.362"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:06.363" level="INFO">Publish topic: test/mqtt_test_sub, message: test message1, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:06.362" endtime="20230525 09:23:06.363"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:06.363" endtime="20230525 09:23:06.364"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:06.330" endtime="20230525 09:23:06.364"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message2</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:06.366" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:06.365" endtime="20230525 09:23:06.378"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:06.379" level="INFO">Publish topic: test/mqtt_test_sub, message: test message2, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:06.378" endtime="20230525 09:23:06.379"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:06.379" endtime="20230525 09:23:06.380"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:06.365" endtime="20230525 09:23:06.380"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message3</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:06.381" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:06.381" endtime="20230525 09:23:06.394"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:06.395" level="INFO">Publish topic: test/mqtt_test_sub, message: test message3, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:06.394" endtime="20230525 09:23:06.395"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:06.395" endtime="20230525 09:23:06.397"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:06.380" endtime="20230525 09:23:06.397"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<var>@{messages}</var>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>limit=0</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:06.398" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:06.397" endtime="20230525 09:23:06.409"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:06.410" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:07.418" level="INFO">@{messages} = [ test message1 | test message2 | test message3 ]</msg>
+<status status="PASS" starttime="20230525 09:23:06.409" endtime="20230525 09:23:07.418"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:07.418" endtime="20230525 09:23:07.418"/>
+</kw>
+<msg timestamp="20230525 09:23:07.418" level="INFO">@{messages} = [ test message1 | test message2 | test message3 ]</msg>
+<status status="PASS" starttime="20230525 09:23:06.397" endtime="20230525 09:23:07.418"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:07.418" level="INFO">['test message1', 'test message2', 'test message3']</msg>
+<status status="PASS" starttime="20230525 09:23:07.418" endtime="20230525 09:23:07.418"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages}</arg>
+<arg>3</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:07.426" level="INFO">Length is 3</msg>
+<status status="PASS" starttime="20230525 09:23:07.425" endtime="20230525 09:23:07.427"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[0]</arg>
+<arg>test message1</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:07.427" endtime="20230525 09:23:07.429"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[1]</arg>
+<arg>test message2</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:07.430" endtime="20230525 09:23:07.431"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[2]</arg>
+<arg>test message3</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:07.431" endtime="20230525 09:23:07.432"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:23:05.293" endtime="20230525 09:23:07.433"/>
+</test>
+<test id="s1-t10" name="Subscribe with limit" line="94">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:07.436" level="INFO">${time} = 1684995787</msg>
+<status status="PASS" starttime="20230525 09:23:07.436" endtime="20230525 09:23:07.436"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:07.437" level="INFO">${client} = robot.mqtt.1684995787</msg>
+<status status="PASS" starttime="20230525 09:23:07.436" endtime="20230525 09:23:07.437"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:07.438" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:07.438" endtime="20230525 09:23:07.438"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:07.439" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:07.439" endtime="20230525 09:23:07.450"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:07.450" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:08.452" level="INFO">@{messages} = [ ]</msg>
+<status status="PASS" starttime="20230525 09:23:07.450" endtime="20230525 09:23:08.452"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:08.452" endtime="20230525 09:23:08.452"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:07.438" endtime="20230525 09:23:08.452"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message1</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:08.452" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:08.452" endtime="20230525 09:23:08.483"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:08.484" level="INFO">Publish topic: test/mqtt_test_sub, message: test message1, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:08.483" endtime="20230525 09:23:08.484"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:08.484" endtime="20230525 09:23:08.485"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:08.452" endtime="20230525 09:23:08.485"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message2</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:08.487" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:08.486" endtime="20230525 09:23:08.499"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:08.500" level="INFO">Publish topic: test/mqtt_test_sub, message: test message2, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:08.499" endtime="20230525 09:23:08.501"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:08.501" endtime="20230525 09:23:08.501"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:08.486" endtime="20230525 09:23:08.502"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message3</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:08.503" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:08.502" endtime="20230525 09:23:08.515"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:08.515" level="INFO">Publish topic: test/mqtt_test_sub, message: test message3, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:08.515" endtime="20230525 09:23:08.516"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:08.516" endtime="20230525 09:23:08.516"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:08.502" endtime="20230525 09:23:08.517"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<var>@{messages}</var>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>limit=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:08.518" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:08.517" endtime="20230525 09:23:08.530"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:08.532" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:09.533" level="INFO">@{messages} = [ test message1 ]</msg>
+<status status="PASS" starttime="20230525 09:23:08.531" endtime="20230525 09:23:09.533"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:09.533" endtime="20230525 09:23:09.533"/>
+</kw>
+<msg timestamp="20230525 09:23:09.533" level="INFO">@{messages} = [ test message1 ]</msg>
+<status status="PASS" starttime="20230525 09:23:08.517" endtime="20230525 09:23:09.533"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:09.533" level="INFO">['test message1']</msg>
+<status status="PASS" starttime="20230525 09:23:09.533" endtime="20230525 09:23:09.533"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages}</arg>
+<arg>1</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:09.538" level="INFO">Length is 1</msg>
+<status status="PASS" starttime="20230525 09:23:09.533" endtime="20230525 09:23:09.539"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[0]</arg>
+<arg>test message1</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:09.540" endtime="20230525 09:23:09.540"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<var>@{messages}</var>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>limit=2</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:09.542" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:09.541" endtime="20230525 09:23:09.556"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:09.557" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:10.558" level="INFO">@{messages} = [ test message2 | test message3 ]</msg>
+<status status="PASS" starttime="20230525 09:23:09.556" endtime="20230525 09:23:10.558"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:10.558" endtime="20230525 09:23:10.558"/>
+</kw>
+<msg timestamp="20230525 09:23:10.558" level="INFO">@{messages} = [ test message2 | test message3 ]</msg>
+<status status="PASS" starttime="20230525 09:23:09.541" endtime="20230525 09:23:10.558"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:10.558" level="INFO">['test message2', 'test message3']</msg>
+<status status="PASS" starttime="20230525 09:23:10.558" endtime="20230525 09:23:10.558"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages}</arg>
+<arg>2</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:10.565" level="INFO">Length is 2</msg>
+<status status="PASS" starttime="20230525 09:23:10.558" endtime="20230525 09:23:10.565"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[0]</arg>
+<arg>test message2</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:10.566" endtime="20230525 09:23:10.567"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[1]</arg>
+<arg>test message3</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:10.568" endtime="20230525 09:23:10.569"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:23:07.435" endtime="20230525 09:23:10.570"/>
+</test>
+<test id="s1-t11" name="Unsubscribe and validate no messages are received" line="112">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:10.574" level="INFO">${time} = 1684995790</msg>
+<status status="PASS" starttime="20230525 09:23:10.573" endtime="20230525 09:23:10.574"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:10.575" level="INFO">${client} = robot.mqtt.1684995790</msg>
+<status status="PASS" starttime="20230525 09:23:10.574" endtime="20230525 09:23:10.575"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:10.576" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:10.575" endtime="20230525 09:23:10.576"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:10.577" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:10.577" endtime="20230525 09:23:10.601"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:10.601" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:11.609" level="INFO">@{messages} = [ ]</msg>
+<status status="PASS" starttime="20230525 09:23:10.601" endtime="20230525 09:23:11.609"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:11.609" endtime="20230525 09:23:11.609"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:10.576" endtime="20230525 09:23:11.609"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message1</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:11.609" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:11.609" endtime="20230525 09:23:11.642"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:11.642" level="INFO">Publish topic: test/mqtt_test_sub, message: test message1, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:11.642" endtime="20230525 09:23:11.643"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:11.643" endtime="20230525 09:23:11.644"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:11.609" endtime="20230525 09:23:11.644"/>
+</kw>
+<kw name="Subscribe and Unsubscribe" library="keywords">
+<var>@{messages}</var>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:11.645" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:11.644" endtime="20230525 09:23:11.657"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:11.657" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:12.658" level="INFO">@{messages} = [ test message1 ]</msg>
+<status status="PASS" starttime="20230525 09:23:11.657" endtime="20230525 09:23:12.658"/>
+</kw>
+<kw name="Unsubscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<doc>Unsubscribe the client from the specified topic.</doc>
+<msg timestamp="20230525 09:23:12.659" level="INFO">Unsubscribing from topic: test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:12.658" endtime="20230525 09:23:12.660"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:12.660" endtime="20230525 09:23:12.661"/>
+</kw>
+<msg timestamp="20230525 09:23:12.662" level="INFO">@{messages} = [ test message1 ]</msg>
+<status status="PASS" starttime="20230525 09:23:11.644" endtime="20230525 09:23:12.662"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message2</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:12.665" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:12.664" endtime="20230525 09:23:12.684"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:12.684" level="INFO">Publish topic: test/mqtt_test_sub, message: test message2, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:12.684" endtime="20230525 09:23:12.685"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:12.685" endtime="20230525 09:23:12.685"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:12.663" endtime="20230525 09:23:12.685"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<var>@{messages}</var>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:12.686" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:12.686" endtime="20230525 09:23:12.687"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:12.688" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:13.700" level="INFO">@{messages} = [ ]</msg>
+<status status="PASS" starttime="20230525 09:23:12.687" endtime="20230525 09:23:13.700"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:13.700" endtime="20230525 09:23:13.700"/>
+</kw>
+<msg timestamp="20230525 09:23:13.700" level="INFO">@{messages} = [ ]</msg>
+<status status="PASS" starttime="20230525 09:23:12.686" endtime="20230525 09:23:13.700"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:13.700" level="INFO">[]</msg>
+<status status="PASS" starttime="20230525 09:23:13.700" endtime="20230525 09:23:13.700"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages}</arg>
+<arg>0</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:13.707" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20230525 09:23:13.706" endtime="20230525 09:23:13.707"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:23:10.572" endtime="20230525 09:23:13.708"/>
+</test>
+<test id="s1-t12" name="Publish and Subscribe to a broker that requires username, password authentication" line="124">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:13.712" level="INFO">${time} = 1684995793</msg>
+<status status="PASS" starttime="20230525 09:23:13.711" endtime="20230525 09:23:13.712"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:13.713" level="INFO">${client} = robot.mqtt.1684995793</msg>
+<status status="PASS" starttime="20230525 09:23:13.712" endtime="20230525 09:23:13.713"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:13.715" level="INFO">${topic} = test</msg>
+<status status="PASS" starttime="20230525 09:23:13.714" endtime="20230525 09:23:13.715"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${message}</var>
+<arg>subscription test message</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:13.715" level="INFO">${message} = subscription test message</msg>
+<status status="PASS" starttime="20230525 09:23:13.715" endtime="20230525 09:23:13.715"/>
+</kw>
+<kw name="Set Username And Password" library="MQTTLibrary">
+<arg>authuser1</arg>
+<arg>password1</arg>
+<status status="PASS" starttime="20230525 09:23:13.716" endtime="20230525 09:23:13.716"/>
+</kw>
+<kw name="Run Keyword And Expect Error" library="BuiltIn">
+<arg>The expected payload didn't arrive in the topic</arg>
+<arg>Subscribe to MQTT Broker and Validate</arg>
+<arg>broker.uri=127.0.0.1</arg>
+<arg>port=11883</arg>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>broker.uri=127.0.0.1</arg>
+<arg>port=11883</arg>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=${message}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:13.717" level="INFO">Connecting to 127.0.0.1 at port 11883</msg>
+<msg timestamp="20230525 09:23:15.760" level="FAIL">ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it</msg>
+<status status="FAIL" starttime="20230525 09:23:13.717" endtime="20230525 09:23:15.775"/>
+</kw>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${message}</arg>
+<arg>${timeout}</arg>
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
+<status status="NOT RUN" starttime="20230525 09:23:15.775" endtime="20230525 09:23:15.775"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:15.775" endtime="20230525 09:23:20.775"/>
+</kw>
+<status status="FAIL" starttime="20230525 09:23:13.716" endtime="20230525 09:23:20.775"/>
+</kw>
+<msg timestamp="20230525 09:23:20.775" level="FAIL">Expected error 'The expected payload didn't arrive in the topic' but got 'ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it'.</msg>
+<status status="FAIL" starttime="20230525 09:23:13.716" endtime="20230525 09:23:20.775"/>
+</kw>
+<kw name="Connect" library="MQTTLibrary">
+<arg>127.0.0.1</arg>
+<arg>11883</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<status status="NOT RUN" starttime="20230525 09:23:20.776" endtime="20230525 09:23:20.776"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>test message with username and password</arg>
+<arg>qos=1</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<status status="NOT RUN" starttime="20230525 09:23:20.776" endtime="20230525 09:23:20.776"/>
+</kw>
+<kw name="Subscribe to MQTT Broker and Validate" library="keywords">
+<arg>broker.uri=127.0.0.1</arg>
+<arg>port=11883</arg>
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<arg>message=test message with username and password</arg>
+<status status="NOT RUN" starttime="20230525 09:23:20.777" endtime="20230525 09:23:20.777"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:20.777" endtime="20230525 09:23:25.778"/>
+</kw>
+<tag>auth</tag>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230525 09:23:13.710" endtime="20230525 09:23:25.778">Expected error 'The expected payload didn't arrive in the topic' but got 'ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it'.</status>
+</test>
+<test id="s1-t13" name="Publish to a broker that requires authentication with invalid password" line="140">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:25.781" level="INFO">${time} = 1684995805</msg>
+<status status="PASS" starttime="20230525 09:23:25.781" endtime="20230525 09:23:25.781"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:25.782" level="INFO">${client} = robot.mqtt.1684995805</msg>
+<status status="PASS" starttime="20230525 09:23:25.782" endtime="20230525 09:23:25.782"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:25.783" level="INFO">${topic} = test</msg>
+<status status="PASS" starttime="20230525 09:23:25.783" endtime="20230525 09:23:25.783"/>
+</kw>
+<kw name="Set Username And Password" library="MQTTLibrary">
+<arg>authuser1</arg>
+<arg>invalidpwd</arg>
+<status status="PASS" starttime="20230525 09:23:25.783" endtime="20230525 09:23:25.784"/>
+</kw>
+<kw name="Run Keyword And Expect Error" library="BuiltIn">
+<arg>The client disconnected unexpectedly</arg>
+<arg>Connect</arg>
+<arg>127.0.0.1</arg>
+<arg>11883</arg>
+<arg>${client}</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<kw name="Connect" library="MQTTLibrary">
+<arg>127.0.0.1</arg>
+<arg>11883</arg>
+<arg>${client}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:25.784" level="INFO">Connecting to 127.0.0.1 at port 11883</msg>
+<msg timestamp="20230525 09:23:27.821" level="FAIL">ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it</msg>
+<status status="FAIL" starttime="20230525 09:23:25.784" endtime="20230525 09:23:27.821"/>
+</kw>
+<msg timestamp="20230525 09:23:27.821" level="FAIL">Expected error 'The client disconnected unexpectedly' but got 'ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it'.</msg>
+<status status="FAIL" starttime="20230525 09:23:25.784" endtime="20230525 09:23:27.821"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:27.821" endtime="20230525 09:23:32.827"/>
+</kw>
+<tag>auth</tag>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230525 09:23:25.780" endtime="20230525 09:23:32.827">Expected error 'The client disconnected unexpectedly' but got 'ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it'.</status>
+</test>
+<test id="s1-t14" name="Subscribe async, publish 1 message, listen for and validate it is received" line="150">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:32.830" level="INFO">${time} = 1684995812</msg>
+<status status="PASS" starttime="20230525 09:23:32.830" endtime="20230525 09:23:32.830"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:32.830" level="INFO">${client} = robot.mqtt.1684995812</msg>
+<status status="PASS" starttime="20230525 09:23:32.830" endtime="20230525 09:23:32.830"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:32.830" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:32.830" endtime="20230525 09:23:32.830"/>
+</kw>
+<kw name="Subscribe Async" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:32.830" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:32.830" endtime="20230525 09:23:32.854"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:32.855" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:32.855" level="INFO">Starting background loop</msg>
+<status status="PASS" starttime="20230525 09:23:32.854" endtime="20230525 09:23:32.856"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:32.830" endtime="20230525 09:23:32.856"/>
+</kw>
+<kw name="Publish to MQTT Broker" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:32.857" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:32.857" endtime="20230525 09:23:32.870"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:32.870" level="INFO">Publish topic: test/mqtt_test_sub, message: test message, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:32.870" endtime="20230525 09:23:32.871"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:32.856" endtime="20230525 09:23:32.871"/>
+</kw>
+<kw name="Listen and Get Messages" library="keywords">
+<var>@{messages}</var>
+<arg>topic=${topic}</arg>
+<kw name="Listen" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Listen to a topic and return a list of message payloads received
+    within the specified time. Requires an async Subscribe to have been called previously.</doc>
+<msg timestamp="20230525 09:23:32.872" level="INFO">@{messages} = [ test message ]</msg>
+<status status="PASS" starttime="20230525 09:23:32.871" endtime="20230525 09:23:32.872"/>
+</kw>
+<msg timestamp="20230525 09:23:32.872" level="INFO">@{messages} = [ test message ]</msg>
+<status status="PASS" starttime="20230525 09:23:32.871" endtime="20230525 09:23:32.872"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:32.872" level="INFO">['test message']</msg>
+<status status="PASS" starttime="20230525 09:23:32.872" endtime="20230525 09:23:32.873"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages}</arg>
+<arg>1</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:32.873" level="INFO">Length is 1</msg>
+<status status="PASS" starttime="20230525 09:23:32.873" endtime="20230525 09:23:32.873"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[0]</arg>
+<arg>test message</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:32.874" endtime="20230525 09:23:32.874"/>
+</kw>
+<kw name="Unsubscribe and Disconnect" library="keywords" type="TEARDOWN">
+<arg>${topic}</arg>
+<kw name="Unsubscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<doc>Unsubscribe the client from the specified topic.</doc>
+<msg timestamp="20230525 09:23:32.875" level="INFO">Closing background loop</msg>
+<msg timestamp="20230525 09:23:33.886" level="INFO">Unsubscribing from topic: test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:32.875" endtime="20230525 09:23:33.886"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:33.886" endtime="20230525 09:23:33.886"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:32.874" endtime="20230525 09:23:33.886"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:23:32.830" endtime="20230525 09:23:33.886"/>
+</test>
+<test id="s1-t15" name="Subscribe async, publish several messages, listen for and validate they are received" line="162">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:33.891" level="INFO">${time} = 1684995813</msg>
+<status status="PASS" starttime="20230525 09:23:33.891" endtime="20230525 09:23:33.891"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:33.892" level="INFO">${client} = robot.mqtt.1684995813</msg>
+<status status="PASS" starttime="20230525 09:23:33.892" endtime="20230525 09:23:33.892"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:33.893" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:33.893" endtime="20230525 09:23:33.893"/>
+</kw>
+<kw name="Subscribe Async" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:33.894" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:33.894" endtime="20230525 09:23:33.917"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:33.917" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:33.919" level="INFO">Starting background loop</msg>
+<status status="PASS" starttime="20230525 09:23:33.917" endtime="20230525 09:23:33.919"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:33.894" endtime="20230525 09:23:33.920"/>
+</kw>
+<kw name="Publish to MQTT Broker" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message1</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:33.921" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:33.920" endtime="20230525 09:23:33.921"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:33.922" level="INFO">Publish topic: test/mqtt_test_sub, message: test message1, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:33.922" endtime="20230525 09:23:33.922"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:33.920" endtime="20230525 09:23:33.922"/>
+</kw>
+<kw name="Publish to MQTT Broker" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message2</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:33.923" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:33.923" endtime="20230525 09:23:33.924"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:33.924" level="INFO">Publish topic: test/mqtt_test_sub, message: test message2, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:33.924" endtime="20230525 09:23:33.924"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:33.922" endtime="20230525 09:23:33.924"/>
+</kw>
+<kw name="Publish to MQTT Broker" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message3</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:33.925" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:33.925" endtime="20230525 09:23:33.926"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:33.926" level="INFO">Publish topic: test/mqtt_test_sub, message: test message3, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:33.926" endtime="20230525 09:23:33.926"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:33.925" endtime="20230525 09:23:33.926"/>
+</kw>
+<kw name="Listen and Get Messages" library="keywords">
+<var>@{messages}</var>
+<arg>topic=${topic}</arg>
+<arg>limit=0</arg>
+<kw name="Listen" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Listen to a topic and return a list of message payloads received
+    within the specified time. Requires an async Subscribe to have been called previously.</doc>
+<msg timestamp="20230525 09:23:33.928" level="INFO">Listening on topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:34.928" level="INFO">@{messages} = [ test message1 | test message2 | test message3 ]</msg>
+<status status="PASS" starttime="20230525 09:23:33.927" endtime="20230525 09:23:34.928"/>
+</kw>
+<msg timestamp="20230525 09:23:34.928" level="INFO">@{messages} = [ test message1 | test message2 | test message3 ]</msg>
+<status status="PASS" starttime="20230525 09:23:33.927" endtime="20230525 09:23:34.928"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:34.928" level="INFO">['test message1', 'test message2', 'test message3']</msg>
+<status status="PASS" starttime="20230525 09:23:34.928" endtime="20230525 09:23:34.928"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages}</arg>
+<arg>3</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:34.933" level="INFO">Length is 3</msg>
+<status status="PASS" starttime="20230525 09:23:34.932" endtime="20230525 09:23:34.934"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[0]</arg>
+<arg>test message1</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:34.935" endtime="20230525 09:23:34.937"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[1]</arg>
+<arg>test message2</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:34.937" endtime="20230525 09:23:34.939"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[2]</arg>
+<arg>test message3</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:34.940" endtime="20230525 09:23:34.941"/>
+</kw>
+<kw name="Unsubscribe and Disconnect" library="keywords" type="TEARDOWN">
+<arg>${topic}</arg>
+<kw name="Unsubscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<doc>Unsubscribe the client from the specified topic.</doc>
+<msg timestamp="20230525 09:23:34.942" level="INFO">Closing background loop</msg>
+<msg timestamp="20230525 09:23:35.939" level="INFO">Unsubscribing from topic: test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:34.941" endtime="20230525 09:23:35.939"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:35.939" endtime="20230525 09:23:35.939"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:34.941" endtime="20230525 09:23:35.939"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:23:33.890" endtime="20230525 09:23:35.939"/>
+</test>
+<test id="s1-t16" name="Subscribe async to multiple topics, publish several messages, listen for them and validate they are received" line="178">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:35.949" level="INFO">${time} = 1684995815</msg>
+<status status="PASS" starttime="20230525 09:23:35.948" endtime="20230525 09:23:35.949"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client1}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:35.950" level="INFO">${client1} = robot.mqtt.1684995815</msg>
+<status status="PASS" starttime="20230525 09:23:35.950" endtime="20230525 09:23:35.950"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client2}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time+1}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:35.952" level="INFO">${client2} = robot.mqtt.1684995816</msg>
+<status status="PASS" starttime="20230525 09:23:35.951" endtime="20230525 09:23:35.953"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic1}</var>
+<arg>test/mqtt_test_sub1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:35.954" level="INFO">${topic1} = test/mqtt_test_sub1</msg>
+<status status="PASS" starttime="20230525 09:23:35.954" endtime="20230525 09:23:35.954"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic2}</var>
+<arg>test/mqtt_test_sub2</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:35.955" level="INFO">${topic2} = test/mqtt_test_sub2</msg>
+<status status="PASS" starttime="20230525 09:23:35.955" endtime="20230525 09:23:35.955"/>
+</kw>
+<kw name="Subscribe Async" library="keywords">
+<arg>client.id=${client1}</arg>
+<arg>topic=${topic1}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:35.956" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:35.955" endtime="20230525 09:23:35.971"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:35.971" level="INFO">Subscribing to topic: test/mqtt_test_sub1</msg>
+<msg timestamp="20230525 09:23:35.971" level="INFO">Starting background loop</msg>
+<status status="PASS" starttime="20230525 09:23:35.971" endtime="20230525 09:23:35.972"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:35.955" endtime="20230525 09:23:35.972"/>
+</kw>
+<kw name="Subscribe Async" library="keywords">
+<arg>client.id=${client2}</arg>
+<arg>topic=${topic2}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:35.974" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:35.974" endtime="20230525 09:23:35.986"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:35.988" level="INFO">Subscribing to topic: test/mqtt_test_sub2</msg>
+<msg timestamp="20230525 09:23:35.988" level="INFO">Starting background loop</msg>
+<status status="PASS" starttime="20230525 09:23:35.987" endtime="20230525 09:23:35.989"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:35.974" endtime="20230525 09:23:35.989"/>
+</kw>
+<kw name="Publish to MQTT Broker" library="keywords">
+<arg>topic=${topic2}</arg>
+<arg>message=test message1</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:35.991" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:35.990" endtime="20230525 09:23:35.992"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:35.993" level="INFO">Publish topic: test/mqtt_test_sub2, message: test message1, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:35.992" endtime="20230525 09:23:35.993"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:35.990" endtime="20230525 09:23:35.993"/>
+</kw>
+<kw name="Publish to MQTT Broker" library="keywords">
+<arg>topic=${topic1}</arg>
+<arg>message=test message2</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:35.994" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:35.994" endtime="20230525 09:23:35.995"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:35.996" level="INFO">Publish topic: test/mqtt_test_sub1, message: test message2, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:35.995" endtime="20230525 09:23:35.997"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:35.993" endtime="20230525 09:23:35.997"/>
+</kw>
+<kw name="Publish to MQTT Broker" library="keywords">
+<arg>topic=${topic2}</arg>
+<arg>message=test message3</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:35.999" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:35.998" endtime="20230525 09:23:36.001"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:36.001" level="INFO">Publish topic: test/mqtt_test_sub2, message: test message3, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:36.001" endtime="20230525 09:23:36.002"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:35.998" endtime="20230525 09:23:36.002"/>
+</kw>
+<kw name="Listen and Get Messages" library="keywords">
+<var>@{messages1}</var>
+<arg>topic=${topic1}</arg>
+<arg>limit=0</arg>
+<kw name="Listen" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Listen to a topic and return a list of message payloads received
+    within the specified time. Requires an async Subscribe to have been called previously.</doc>
+<msg timestamp="20230525 09:23:36.003" level="INFO">Listening on topic: test/mqtt_test_sub1</msg>
+<msg timestamp="20230525 09:23:37.004" level="INFO">@{messages} = [ test message2 ]</msg>
+<status status="PASS" starttime="20230525 09:23:36.003" endtime="20230525 09:23:37.004"/>
+</kw>
+<msg timestamp="20230525 09:23:37.004" level="INFO">@{messages1} = [ test message2 ]</msg>
+<status status="PASS" starttime="20230525 09:23:36.002" endtime="20230525 09:23:37.004"/>
+</kw>
+<kw name="Listen and Get Messages" library="keywords">
+<var>@{messages2}</var>
+<arg>topic=${topic2}</arg>
+<arg>limit=0</arg>
+<kw name="Listen" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Listen to a topic and return a list of message payloads received
+    within the specified time. Requires an async Subscribe to have been called previously.</doc>
+<msg timestamp="20230525 09:23:37.009" level="INFO">Listening on topic: test/mqtt_test_sub2</msg>
+<msg timestamp="20230525 09:23:38.009" level="INFO">@{messages} = [ test message1 | test message3 ]</msg>
+<status status="PASS" starttime="20230525 09:23:37.004" endtime="20230525 09:23:38.009"/>
+</kw>
+<msg timestamp="20230525 09:23:38.009" level="INFO">@{messages2} = [ test message1 | test message3 ]</msg>
+<status status="PASS" starttime="20230525 09:23:37.004" endtime="20230525 09:23:38.009"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages1}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:38.009" level="INFO">['test message2']</msg>
+<status status="PASS" starttime="20230525 09:23:38.009" endtime="20230525 09:23:38.009"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${messages2}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 09:23:38.013" level="INFO">['test message1', 'test message3']</msg>
+<status status="PASS" starttime="20230525 09:23:38.009" endtime="20230525 09:23:38.013"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages1}</arg>
+<arg>1</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:38.015" level="INFO">Length is 1</msg>
+<status status="PASS" starttime="20230525 09:23:38.014" endtime="20230525 09:23:38.015"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages1}[0]</arg>
+<arg>test message2</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:38.015" endtime="20230525 09:23:38.017"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${messages2}</arg>
+<arg>2</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20230525 09:23:38.018" level="INFO">Length is 2</msg>
+<status status="PASS" starttime="20230525 09:23:38.017" endtime="20230525 09:23:38.018"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages2}[0]</arg>
+<arg>test message1</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:38.019" endtime="20230525 09:23:38.019"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages2}[1]</arg>
+<arg>test message3</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:38.020" endtime="20230525 09:23:38.020"/>
+</kw>
+<kw name="Unsubscribe Multiple and Disconnect" library="keywords" type="TEARDOWN">
+<arg>${topic1}</arg>
+<arg>${topic2}</arg>
+<for flavor="IN">
+<var>${topic}</var>
+<value>@{topics}</value>
+<iter>
+<var name="${topic}">test/mqtt_test_sub1</var>
+<kw name="Unsubscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<doc>Unsubscribe the client from the specified topic.</doc>
+<msg timestamp="20230525 09:23:38.021" level="INFO">Closing background loop</msg>
+<msg timestamp="20230525 09:23:39.019" level="INFO">Unsubscribing from topic: test/mqtt_test_sub1</msg>
+<status status="PASS" starttime="20230525 09:23:38.020" endtime="20230525 09:23:39.020"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:38.020" endtime="20230525 09:23:39.020"/>
+</iter>
+<iter>
+<var name="${topic}">test/mqtt_test_sub2</var>
+<kw name="Unsubscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<doc>Unsubscribe the client from the specified topic.</doc>
+<msg timestamp="20230525 09:23:39.020" level="INFO">Unsubscribing from topic: test/mqtt_test_sub2</msg>
+<status status="PASS" starttime="20230525 09:23:39.020" endtime="20230525 09:23:39.020"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:39.020" endtime="20230525 09:23:39.020"/>
+</iter>
+<status status="PASS" starttime="20230525 09:23:38.020" endtime="20230525 09:23:39.020"/>
+</for>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:39.020" endtime="20230525 09:23:39.020"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:38.020" endtime="20230525 09:23:39.020"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:23:35.946" endtime="20230525 09:23:39.020"/>
+</test>
+<test id="s1-t17" name="Listen immediately after Subscribe and validate message is received" line="200">
+<kw name="Get Time" library="BuiltIn">
+<var>${time}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<msg timestamp="20230525 09:23:39.028" level="INFO">${time} = 1684995819</msg>
+<status status="PASS" starttime="20230525 09:23:39.027" endtime="20230525 09:23:39.028"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${client}</var>
+<arg>SEPARATOR=.</arg>
+<arg>robot.mqtt</arg>
+<arg>${time}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 09:23:39.030" level="INFO">${client} = robot.mqtt.1684995819</msg>
+<status status="PASS" starttime="20230525 09:23:39.029" endtime="20230525 09:23:39.030"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${topic}</var>
+<arg>test/mqtt_test_sub</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230525 09:23:39.031" level="INFO">${topic} = test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:39.030" endtime="20230525 09:23:39.031"/>
+</kw>
+<kw name="Subscribe and Get Messages" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:39.033" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:39.032" endtime="20230525 09:23:39.051"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:39.051" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:40.064" level="INFO">@{messages} = [ ]</msg>
+<status status="PASS" starttime="20230525 09:23:39.051" endtime="20230525 09:23:40.064"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:40.064" endtime="20230525 09:23:40.065"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:39.032" endtime="20230525 09:23:40.065"/>
+</kw>
+<kw name="Publish to MQTT Broker and Disconnect" library="keywords">
+<arg>topic=${topic}</arg>
+<arg>message=test message</arg>
+<arg>qos=1</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${clean_session}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:40.068" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:40.067" endtime="20230525 09:23:40.081"/>
+</kw>
+<kw name="Publish" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${message}</arg>
+<arg>${qos}</arg>
+<arg>${retention}</arg>
+<doc>Publish a message to a topic with specified qos and retained flag.
+It is required that a connection has been established using `Connect`
+keyword before using this keyword.</doc>
+<msg timestamp="20230525 09:23:40.081" level="INFO">Publish topic: test/mqtt_test_sub, message: test message, qos: 1, retain: False</msg>
+<status status="PASS" starttime="20230525 09:23:40.081" endtime="20230525 09:23:40.082"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:40.082" endtime="20230525 09:23:40.082"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:40.066" endtime="20230525 09:23:40.082"/>
+</kw>
+<kw name="Subscribe Async" library="keywords">
+<arg>client.id=${client}</arg>
+<arg>topic=${topic}</arg>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${broker.uri}</arg>
+<arg>${port}</arg>
+<arg>${client.id}</arg>
+<arg>${false}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<msg timestamp="20230525 09:23:40.084" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20230525 09:23:40.082" endtime="20230525 09:23:40.096"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<arg>${qos}</arg>
+<arg>${timeout}</arg>
+<arg>${limit}</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<msg timestamp="20230525 09:23:40.097" level="INFO">Subscribing to topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:40.097" level="INFO">Starting background loop</msg>
+<status status="PASS" starttime="20230525 09:23:40.096" endtime="20230525 09:23:40.098"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:40.082" endtime="20230525 09:23:40.098"/>
+</kw>
+<kw name="Listen" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>topic=${topic}</arg>
+<arg>limit=10</arg>
+<arg>timeout=5</arg>
+<doc>Listen to a topic and return a list of message payloads received
+    within the specified time. Requires an async Subscribe to have been called previously.</doc>
+<msg timestamp="20230525 09:23:40.099" level="INFO">Listening on topic: test/mqtt_test_sub</msg>
+<msg timestamp="20230525 09:23:45.103" level="INFO">@{messages} = [ test message ]</msg>
+<status status="PASS" starttime="20230525 09:23:40.098" endtime="20230525 09:23:45.103"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${messages}[0]</arg>
+<arg>test message</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 09:23:45.103" endtime="20230525 09:23:45.103"/>
+</kw>
+<kw name="Unsubscribe and Disconnect" library="keywords" type="TEARDOWN">
+<arg>${topic}</arg>
+<kw name="Unsubscribe" library="MQTTLibrary">
+<arg>${topic}</arg>
+<doc>Unsubscribe the client from the specified topic.</doc>
+<msg timestamp="20230525 09:23:45.108" level="INFO">Closing background loop</msg>
+<msg timestamp="20230525 09:23:45.125" level="INFO">Unsubscribing from topic: test/mqtt_test_sub</msg>
+<status status="PASS" starttime="20230525 09:23:45.107" endtime="20230525 09:23:45.125"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<status status="PASS" starttime="20230525 09:23:45.125" endtime="20230525 09:23:45.126"/>
+</kw>
+<status status="PASS" starttime="20230525 09:23:45.107" endtime="20230525 09:23:45.126"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230525 09:23:39.027" endtime="20230525 09:23:45.127"/>
+</test>
+<status status="FAIL" starttime="20230525 09:22:52.745" endtime="20230525 09:23:45.129"/>
+</suite>
+<statistics>
+<total>
+<stat pass="15" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="2" skip="0">auth</stat>
+</tag>
+<suite>
+<stat pass="15" fail="2" skip="0" id="s1" name="Pubsub">Pubsub</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
